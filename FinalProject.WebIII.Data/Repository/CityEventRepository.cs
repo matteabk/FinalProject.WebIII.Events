@@ -22,7 +22,7 @@ namespace FinalProject.WebIII.Data.Repository
 
         public bool CreateEvent(CityEvent cityEvent)
         {
-            var query = "INSERT INTO CityEvent VALUES (@title, @description, @dateHourEvent, @local, @address, @price)";
+            var query = "INSERT INTO CityEvent VALUES (@title, @description, @dateHourEvent, @local, @address, @price, @status)";
 
             var parameters = new DynamicParameters();
             parameters.Add("title", cityEvent.Title);
@@ -31,6 +31,8 @@ namespace FinalProject.WebIII.Data.Repository
             parameters.Add("local", cityEvent.Local);
             parameters.Add("address", cityEvent.Address);
             parameters.Add("price", cityEvent.Price);
+            parameters.Add("status", cityEvent.Status);
+
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
@@ -72,7 +74,7 @@ namespace FinalProject.WebIII.Data.Repository
 
         public bool UpdateEvent(long idEvent, CityEvent cityEvent)
         {
-            var query = "UPDATE CityEvent SET title = @title, description = @description, dateHourEvent = @dateHourEvent, local = @local, address = @address, price = @price WHERE idEvent = @idEvent";
+            var query = "UPDATE CityEvent SET title = @title, description = @description, dateHourEvent = @dateHourEvent, local = @local, address = @address, price = @price, status = @status WHERE idEvent = @idEvent";
 
             var parameters = new DynamicParameters();
             parameters.Add("title", cityEvent.Title);
@@ -81,6 +83,7 @@ namespace FinalProject.WebIII.Data.Repository
             parameters.Add("local", cityEvent.Local);
             parameters.Add("address", cityEvent.Address);
             parameters.Add("price", cityEvent.Price);
+            parameters.Add("status", cityEvent.Status);
             parameters.Add("idEvent", idEvent);
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));

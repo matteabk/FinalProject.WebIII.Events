@@ -15,6 +15,7 @@ namespace FinalProject.WebIII.Core.Models
         public string Local { get; set; }
         public string Address { get; set; }
         public decimal Price { get; set; }
+        public int Status { get; set; }
 
     }
 }
