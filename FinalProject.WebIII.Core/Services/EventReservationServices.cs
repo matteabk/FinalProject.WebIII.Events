@@ -36,6 +36,11 @@ namespace FinalProject.WebIII.Core.Services
             return _eventReservationRepository.GetReservations();
         }
 
+        public List<EventReservation> GetReservationsByNameAndTitle(string personName, string title)
+        {
+            return _eventReservationRepository.GetReservationsByNameAndTitle(personName, title);
+        }
+
         public bool UpdateReservation(long idReservation, EventReservation reservation)
         {
             return _eventReservationRepository.UpdateReservation(idReservation, reservation);

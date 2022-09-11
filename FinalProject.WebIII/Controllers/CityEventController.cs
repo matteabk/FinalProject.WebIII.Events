@@ -17,14 +17,14 @@ namespace FinalProject.WebIII.Controllers
             _cityEventServices = cityEventServices;
         }
 
-        [HttpGet("/cityEvents")]
+        [HttpGet("/cityEvents/Get")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<CityEvent>> GetCityEvents()
         {
             return Ok(_cityEventServices.GetEvents());
         }
 
-        [HttpGet("/cityEvents/{idEvent}")]
+        [HttpGet("/cityEvents/GetById/{idEvent}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CityEvent> GetCityEventById(long idEvent)
@@ -34,6 +34,54 @@ namespace FinalProject.WebIII.Controllers
                 return NotFound();
             }
             return Ok(_cityEventServices.GetEventById(idEvent));
+        }
+
+        [HttpGet("cityEvents/GetByName/{title}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<CityEvent>> GetEventsByName(string title)
+        {
+            if(_cityEventServices.GetEventsByName(title) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_cityEventServices.GetEventsByName(title));
+        }
+
+        [HttpGet("GetByLocal/{local}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<CityEvent>> GetEventsByLocal(string local)
+        {
+            if (_cityEventServices.GetEventsByLocal(local) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_cityEventServices.GetEventsByLocal(local));
+        }
+
+        [HttpGet("GetByDate")] //CORRIGIR, ESTÁ DANDO ERRO!//
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<CityEvent>> GetEventsByDate([FromQuery]DateTime dateHourEvent)
+        {
+            if (_cityEventServices.GetEventsByDate(dateHourEvent) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_cityEventServices.GetEventsByDate(dateHourEvent));
+        }
+
+        [HttpGet("GetByPriceRange")] 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<CityEvent>> GetEventsByPriceRange(decimal price1, decimal price2)
+        {
+            if (_cityEventServices.GetEventsByPriceRange(price1, price2) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_cityEventServices.GetEventsByPriceRange(price1, price2));
         }
 
         [HttpPost("/cityEvents/Add")]

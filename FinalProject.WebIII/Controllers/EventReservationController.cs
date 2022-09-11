@@ -17,7 +17,7 @@ namespace FinalProject.WebIII.Controllers
             _eventReservationServices = eventReservationServices;
         }
 
-        [HttpGet("/eventReservation")]
+        [HttpGet("/eventReservation/Get")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<List<EventReservation>> GetEventReservations()
@@ -25,7 +25,7 @@ namespace FinalProject.WebIII.Controllers
             return Ok(_eventReservationServices.GetReservations());
         }
 
-        [HttpGet("/eventReservation/{idReservation}")]
+        [HttpGet("/eventReservation/GetById/{idReservation}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<EventReservation> GetEventReservationById(long idReservation)
@@ -35,6 +35,18 @@ namespace FinalProject.WebIII.Controllers
                 return NotFound();
             }
             return Ok(_eventReservationServices.GetReservationById(idReservation));
+        }
+
+        [HttpGet("/eventReservation/GetByPersonNameAndEventTitle/{personName}/{title}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<EventReservation> GetReservationByPersonNameAndTitle(string personName, string title)
+        {
+            if (_eventReservationServices.GetReservationsByNameAndTitle(personName, title) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_eventReservationServices.GetReservationsByNameAndTitle(personName, title));
         }
 
         [HttpPost("/eventReservation/Add")]

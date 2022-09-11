@@ -72,6 +72,55 @@ namespace FinalProject.WebIII.Data.Repository
             return conn.Query<CityEvent>(query).ToList();
         }
 
+        public List<CityEvent> GetEventsByName(string title)
+        {
+            var query = "SELECT * FROM CityEvent WHERE Title LIKE (@title + '%')";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("title", title);
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            return conn.Query<CityEvent>(query, parameters).ToList();
+        }
+
+        public List<CityEvent> GetEventsByLocal(string local)
+        {
+            var query = "SELECT * FROM CityEvent WHERE Local LIKE (@local + '%')";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("local", local);
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            return conn.Query<CityEvent>(query, parameters).ToList();
+        }
+
+        public List<CityEvent> GetEventsByDate (DateTime dateHourEvent) //NÃO FUNCIONANDO
+        {
+            var query = "SELECT * FROM CityEvent WHERE CAST(dateHourEvent as DATE) = CAST(@dateHourEvent as DATE)";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("dateHourEvent", dateHourEvent);
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            return conn.Query<CityEvent>(query, parameters).ToList();
+        }
+
+        public List<CityEvent> GetEventsByPriceRange(decimal price1, decimal price2)
+        {
+            var query = "SELECT * FROM CityEvent WHERE Price BETWEEN @price1 AND @price2";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("price1", price1);
+            parameters.Add("price2", price2);
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            return conn.Query<CityEvent>(query,parameters).ToList();
+        }
+
         public bool UpdateEvent(long idEvent, CityEvent cityEvent)
         {
             var query = "UPDATE CityEvent SET title = @title, description = @description, dateHourEvent = @dateHourEvent, local = @local, address = @address, price = @price, status = @status WHERE idEvent = @idEvent";

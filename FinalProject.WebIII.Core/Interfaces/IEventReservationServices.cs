@@ -11,6 +11,7 @@ namespace FinalProject.WebIII.Core.Interfaces
     {
         public List<EventReservation> GetReservations();
         public EventReservation GetReservationById(long idReservation);
+        public List<EventReservation> GetReservationsByNameAndTitle(string personName, string title);
         public bool CreateReservation(EventReservation reservation);
         public bool UpdateReservation(long idReservation, EventReservation reservation);
         public bool DeleteReservation(long idReservation);

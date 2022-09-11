@@ -11,6 +11,10 @@ namespace FinalProject.WebIII.Core.Interfaces
     {
         public List<CityEvent> GetEvents();
         public CityEvent GetEventById(long idEvent);
+        public List<CityEvent> GetEventsByName(string title);
+        public List<CityEvent> GetEventsByLocal(string local);
+        public List<CityEvent> GetEventsByDate(DateTime dateHourEvent);
+        public List<CityEvent> GetEventsByPriceRange(decimal price1, decimal price2);
         public bool CreateEvent (CityEvent cityEvent);
         public bool UpdateEvent (long idEvent, CityEvent cityEvent);
         public bool DeleteEvent (long idEvent);

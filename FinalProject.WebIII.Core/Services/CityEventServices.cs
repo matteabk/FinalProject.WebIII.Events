@@ -37,6 +37,26 @@ namespace FinalProject.WebIII.Core.Services
             return _cityEventRepository.GetEvents();
         }
 
+        public List<CityEvent> GetEventsByName(string title)
+        {
+            return _cityEventRepository.GetEventsByName(title);
+        }
+
+        public List<CityEvent> GetEventsByLocal(string local)
+        {
+            return _cityEventRepository.GetEventsByLocal(local);
+        }
+
+        public List<CityEvent> GetEventsByDate(DateTime dateHourEvent)
+        {
+            return _cityEventRepository.GetEventsByDate(dateHourEvent);
+        }
+
+        public List<CityEvent> GetEventsByPriceRange(decimal price1, decimal price2)
+        {
+            return _cityEventRepository.GetEventsByPriceRange(price1, price2);
+        }
+
         public bool UpdateEvent(long idEvent, CityEvent cityEvent)
         {
             return _cityEventRepository.UpdateEvent(idEvent, cityEvent);

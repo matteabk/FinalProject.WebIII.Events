@@ -67,6 +67,19 @@ namespace FinalProject.WebIII.Data.Repository
             return conn.Query<EventReservation>(query).ToList();
         }
 
+        public List<EventReservation> GetReservationsByNameAndTitle(string personName, string title)
+        {
+            var query = "Select e.* FROM EventReservation e INNER JOIN CityEvent c ON e.idEvent = c.idEvent WHERE e.personName = @personName AND c.title LIKE (@title + '%')";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("personName", personName);
+            parameters.Add("title", title);
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            return conn.Query<EventReservation>(query, parameters).ToList();
+        }
+
         public bool UpdateReservation(long idReservation, EventReservation reservation)
         {
             var query = "UPDATE EventReservation SET idEvent = @idEvent, personNmae = @personName, quantity = @quantity WHERE idReservation = @idReservation";
