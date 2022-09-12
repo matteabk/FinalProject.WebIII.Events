@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FinalProject.WebIII.Core.Interfaces;
 using FinalProject.WebIII.Core.Models;
+using FinalProject.WebIII.Filters;
 
 namespace FinalProject.WebIII.Controllers
 {
@@ -16,6 +17,8 @@ namespace FinalProject.WebIII.Controllers
         {
             _eventReservationServices = eventReservationServices;
         }
+
+
 
         [HttpGet("/eventReservation/Get")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -52,6 +55,8 @@ namespace FinalProject.WebIII.Controllers
         [HttpPost("/eventReservation/Add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ServiceFilter(typeof(CheckIdEventForReservation))]
+        [ServiceFilter(typeof(CheckExistingIdReservation))]
         public ActionResult<EventReservation> PostEventReservation(EventReservation eventReservation)
         {
             if(!_eventReservationServices.CreateReservation(eventReservation))
@@ -64,6 +69,7 @@ namespace FinalProject.WebIII.Controllers
         [HttpPut("/eventReservation/Update/{idReservation}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ServiceFilter(typeof(CheckIdEventForReservation))]
         public IActionResult PutEventReservation(long idReservation, EventReservation eventReservation)
         {
             if(!_eventReservationServices.UpdateReservation(idReservation, eventReservation))

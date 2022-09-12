@@ -1,5 +1,6 @@
 using FinalProject.WebIII.Core.Interfaces;
 using FinalProject.WebIII.Core.Models;
+using FinalProject.WebIII.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProject.WebIII.Controllers
@@ -60,7 +61,7 @@ namespace FinalProject.WebIII.Controllers
             return Ok(_cityEventServices.GetEventsByLocal(local));
         }
 
-        [HttpGet("GetByDate")] //CORRIGIR, ESTÁ DANDO ERRO!//
+        [HttpGet("GetByDate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<CityEvent>> GetEventsByDate([FromQuery]DateTime dateHourEvent)
@@ -87,6 +88,7 @@ namespace FinalProject.WebIII.Controllers
         [HttpPost("/cityEvents/Add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ServiceFilter(typeof(CheckExistingIdEvent))]
         public ActionResult<CityEvent> PostCityEvent(CityEvent cityEvent)
         {
             if(!_cityEventServices.CreateEvent(cityEvent))

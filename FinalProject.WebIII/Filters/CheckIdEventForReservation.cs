@@ -1,4 +1,5 @@
 ﻿using FinalProject.WebIII.Core.Interfaces;
+using FinalProject.WebIII.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -14,9 +15,9 @@ namespace FinalProject.WebIII.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            long idEvent = (long)context.ActionArguments["idEvent"];
+            var body = context.ActionArguments["eventReservation"] as EventReservation;
 
-            if(_cityEventServices.GetEventById(idEvent) == null)
+            if(_cityEventServices.GetEventById(body.IdEvent) == null)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status404NotFound);
                 Console.WriteLine("Não há evento com o ID apresentado.");
