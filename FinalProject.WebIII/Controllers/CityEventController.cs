@@ -113,6 +113,7 @@ namespace FinalProject.WebIII.Controllers
         [HttpDelete("cityEvents/Delete/{idEvent}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ServiceFilter(typeof(CheckReservationsForEvents))]
         public IActionResult DeleteCityEvent(long idEvent)
         {
             if (!_cityEventServices.DeleteEvent(idEvent))

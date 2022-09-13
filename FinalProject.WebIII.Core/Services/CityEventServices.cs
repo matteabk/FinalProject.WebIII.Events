@@ -61,5 +61,9 @@ namespace FinalProject.WebIII.Core.Services
         {
             return _cityEventRepository.UpdateEvent(idEvent, cityEvent);
         }
+        public void UpdateStatus(long idEvent, CityEvent cityEvent)
+        {
+            _cityEventRepository.UpdateStatus(idEvent, cityEvent);
+        }
     }
 }

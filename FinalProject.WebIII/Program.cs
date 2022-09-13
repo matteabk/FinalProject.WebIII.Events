@@ -20,6 +20,7 @@ builder.Services.AddScoped<IEventReservationRepository, EventReservationReposito
 builder.Services.AddScoped<CheckIdEventForReservation>();
 builder.Services.AddScoped<CheckExistingIdEvent>();
 builder.Services.AddScoped<CheckExistingIdReservation>();
+builder.Services.AddScoped<CheckReservationsForEvents>();
 
 var app = builder.Build();
 

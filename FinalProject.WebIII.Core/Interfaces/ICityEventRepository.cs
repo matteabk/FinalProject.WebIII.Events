@@ -17,6 +17,7 @@ namespace FinalProject.WebIII.Core.Interfaces
         public List<CityEvent> GetEventsByPriceRange(decimal price1, decimal price2);
         public bool CreateEvent (CityEvent cityEvent);
         public bool UpdateEvent (long idEvent, CityEvent cityEvent);
+        public void UpdateStatus(long idEvent, CityEvent cityEvent);
         public bool DeleteEvent (long idEvent);
     }
 }

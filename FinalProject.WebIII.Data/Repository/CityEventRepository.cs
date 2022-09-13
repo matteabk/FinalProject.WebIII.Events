@@ -139,5 +139,18 @@ namespace FinalProject.WebIII.Data.Repository
 
             return conn.Execute(query, parameters) == 1;
         }
+
+        public void UpdateStatus(long idEvent, CityEvent cityEvent)
+        {
+            var query = "UPDATE CityEvent SET status = 'false' WHERE idEvent = @idEvent";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("status", cityEvent.Status);
+            parameters.Add("idEvent", cityEvent.IdEvent);
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            _ = conn.Execute(query, parameters);
+        }
     }
 }

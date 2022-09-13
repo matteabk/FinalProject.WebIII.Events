@@ -58,6 +58,18 @@ namespace FinalProject.WebIII.Data.Repository
             return conn.QuerySingleOrDefault<EventReservation>(query, parameters);
         }
 
+        public List<EventReservation> GetReservationsByEventID(long idEvent)
+        {
+            var query = "SELECT * FROM  EventReservation WHERE idEvent = @idEvent";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("idEvent", idEvent);
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            return conn.Query<EventReservation>(query, parameters).ToList();
+        }
+
         public List<EventReservation> GetReservations()
         {
             var query = "SELECT * FROM  EventReservation";

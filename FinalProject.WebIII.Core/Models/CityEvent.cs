@@ -20,7 +20,7 @@ namespace FinalProject.WebIII.Core.Models
         public string? Address { get; set; }
         public decimal? Price { get; set; }
         [Required(ErrorMessage = "Por favor, informar o status do evento.")]
-        public int Status { get; set; }
+        public bool Status { get; set; }
 
     }
 }
