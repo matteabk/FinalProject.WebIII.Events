@@ -84,19 +84,20 @@ namespace FinalProject.WebIII.Data.Repository
             return conn.Query<CityEvent>(query, parameters).ToList();
         }
 
-        public List<CityEvent> GetEventsByLocal(string local)
+        public List<CityEvent> GetEventsByLocalAndDate(string local, DateTime dateHourEvent)
         {
-            var query = "SELECT * FROM CityEvent WHERE Local LIKE (@local + '%')";
+            var query = "SELECT * FROM CityEvent WHERE Local LIKE (@local + '%') AND CAST(dateHourEvent as DATE) = CAST(@dateHourEvent as DATE)";
 
             var parameters = new DynamicParameters();
             parameters.Add("local", local);
+            parameters.Add("dateHourEvent", dateHourEvent);
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
             return conn.Query<CityEvent>(query, parameters).ToList();
         }
 
-        public List<CityEvent> GetEventsByDate (DateTime dateHourEvent) //NÃO FUNCIONANDO
+        public List<CityEvent> GetEventsByDate (DateTime dateHourEvent)
         {
             var query = "SELECT * FROM CityEvent WHERE CAST(dateHourEvent as DATE) = CAST(@dateHourEvent as DATE)";
 
@@ -108,13 +109,14 @@ namespace FinalProject.WebIII.Data.Repository
             return conn.Query<CityEvent>(query, parameters).ToList();
         }
 
-        public List<CityEvent> GetEventsByPriceRange(decimal price1, decimal price2)
+        public List<CityEvent> GetEventsByPriceRangeAndDate(decimal price1, decimal price2, DateTime dateHourEvent)
         {
-            var query = "SELECT * FROM CityEvent WHERE Price BETWEEN @price1 AND @price2";
+            var query = "SELECT * FROM CityEvent WHERE CAST(dateHourEvent as DATE) = CAST(@dateHourEvent as DATE) AND Price BETWEEN @price1 AND @price2";
 
             var parameters = new DynamicParameters();
             parameters.Add("price1", price1);
             parameters.Add("price2", price2);
+            parameters.Add("dateHourEvent", dateHourEvent);
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 

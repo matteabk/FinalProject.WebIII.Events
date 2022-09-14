@@ -42,9 +42,9 @@ namespace FinalProject.WebIII.Core.Services
             return _cityEventRepository.GetEventsByName(title);
         }
 
-        public List<CityEvent> GetEventsByLocal(string local)
+        public List<CityEvent> GetEventsByLocalAndDate(string local, DateTime dateHourEvent)
         {
-            return _cityEventRepository.GetEventsByLocal(local);
+            return _cityEventRepository.GetEventsByLocalAndDate(local, dateHourEvent);
         }
 
         public List<CityEvent> GetEventsByDate(DateTime dateHourEvent)
@@ -52,9 +52,9 @@ namespace FinalProject.WebIII.Core.Services
             return _cityEventRepository.GetEventsByDate(dateHourEvent);
         }
 
-        public List<CityEvent> GetEventsByPriceRange(decimal price1, decimal price2)
+        public List<CityEvent> GetEventsByPriceRangeAndDate(decimal price1, decimal price2, DateTime dateHourEvent)
         {
-            return _cityEventRepository.GetEventsByPriceRange(price1, price2);
+            return _cityEventRepository.GetEventsByPriceRangeAndDate(price1, price2, dateHourEvent);
         }
 
         public bool UpdateEvent(long idEvent, CityEvent cityEvent)

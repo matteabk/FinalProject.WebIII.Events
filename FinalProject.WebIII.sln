@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.WebIII", "FinalProject.WebIII\FinalProject.WebIII.csproj", "{BDFBCAC3-FB62-4EE7-A071-E14B27227D20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIEvents", "FinalProject.WebIII\APIEvents.csproj", "{BDFBCAC3-FB62-4EE7-A071-E14B27227D20}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.WebIII.Core", "FinalProject.WebIII.Core\FinalProject.WebIII.Core.csproj", "{D846B957-37C9-45E5-BF48-B1D23337E932}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalProject.WebIII.Data", "FinalProject.WebIII.Data\FinalProject.WebIII.Data.csproj", "{F2449611-8BA8-4A68-86BA-AAFAB844030B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.WebIII.Data", "FinalProject.WebIII.Data\FinalProject.WebIII.Data.csproj", "{F2449611-8BA8-4A68-86BA-AAFAB844030B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

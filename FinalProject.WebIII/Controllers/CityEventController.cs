@@ -1,6 +1,7 @@
 using FinalProject.WebIII.Core.Interfaces;
 using FinalProject.WebIII.Core.Models;
 using FinalProject.WebIII.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProject.WebIII.Controllers
@@ -49,16 +50,16 @@ namespace FinalProject.WebIII.Controllers
             return Ok(_cityEventServices.GetEventsByName(title));
         }
 
-        [HttpGet("GetByLocal/{local}")]
+        [HttpGet("GetByLocalAndDate/{local}/date")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<CityEvent>> GetEventsByLocal(string local)
+        public ActionResult<List<CityEvent>> GetEventsByLocalAndDate(string local, [FromQuery]DateTime dateHourEvent)
         {
-            if (_cityEventServices.GetEventsByLocal(local) == null)
+            if (_cityEventServices.GetEventsByLocalAndDate(local, dateHourEvent) == null)
             {
                 return NotFound();
             }
-            return Ok(_cityEventServices.GetEventsByLocal(local));
+            return Ok(_cityEventServices.GetEventsByLocalAndDate(local, dateHourEvent));
         }
 
         [HttpGet("GetByDate")]
@@ -73,22 +74,23 @@ namespace FinalProject.WebIII.Controllers
             return Ok(_cityEventServices.GetEventsByDate(dateHourEvent));
         }
 
-        [HttpGet("GetByPriceRange")] 
+        [HttpGet("GetByPriceRangeAndDate")] 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<CityEvent>> GetEventsByPriceRange(decimal price1, decimal price2)
+        public ActionResult<List<CityEvent>> GetEventsByPriceRangeAndDate(decimal price1, decimal price2, DateTime dateHourEvent)
         {
-            if (_cityEventServices.GetEventsByPriceRange(price1, price2) == null)
+            if (_cityEventServices.GetEventsByPriceRangeAndDate(price1, price2, dateHourEvent) == null)
             {
                 return NotFound();
             }
-            return Ok(_cityEventServices.GetEventsByPriceRange(price1, price2));
+            return Ok(_cityEventServices.GetEventsByPriceRangeAndDate(price1, price2, dateHourEvent));
         }
 
         [HttpPost("/cityEvents/Add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ServiceFilter(typeof(CheckExistingIdEvent))]
+        [Authorize(Roles = "admin")]
         public ActionResult<CityEvent> PostCityEvent(CityEvent cityEvent)
         {
             if(!_cityEventServices.CreateEvent(cityEvent))
@@ -101,6 +103,7 @@ namespace FinalProject.WebIII.Controllers
         [HttpPut("/cityEvents/Update/{idEvent}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public IActionResult PutCityEvent(long idEvent, CityEvent cityEvent)
         {
             if (!_cityEventServices.UpdateEvent(idEvent, cityEvent))
@@ -114,6 +117,7 @@ namespace FinalProject.WebIII.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ServiceFilter(typeof(CheckReservationsForEvents))]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteCityEvent(long idEvent)
         {
             if (!_cityEventServices.DeleteEvent(idEvent))

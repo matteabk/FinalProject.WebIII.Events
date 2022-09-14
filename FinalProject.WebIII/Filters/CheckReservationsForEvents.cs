@@ -20,12 +20,18 @@ namespace FinalProject.WebIII.Filters
             long idEvent = (long)context.ActionArguments["idEvent"];
             var cityEvent = _cityEventServices.GetEventById(idEvent);
 
-            if (_eventReservationServices.GetReservationsByEventID(idEvent) != null)
+            if (_eventReservationServices.GetReservationsByEventID(idEvent).Count > 0)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status204NoContent);
+                //context.Result =  new ObjectResult("Como já havia reservas para o evento registrado, iremos apenas deixá-lo inativo.") { StatusCode = (int)204 };
                 Console.WriteLine("Como já havia reservas para o evento registrado, iremos apenas deixá-lo inativo.");
 
                 _cityEventServices.UpdateStatus(idEvent, cityEvent);
+            }
+            else
+            {
+                Console.WriteLine("O evento foi deletado com sucesso!");
+                return;
             }
         }
     }
