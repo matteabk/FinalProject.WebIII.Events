@@ -2,6 +2,7 @@
 using FinalProject.WebIII.Core.Interfaces;
 using FinalProject.WebIII.Core.Models;
 using FinalProject.WebIII.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProject.WebIII.Controllers
 {
@@ -31,6 +32,7 @@ namespace FinalProject.WebIII.Controllers
         [HttpGet("/eventReservation/GetById/{idReservation}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public ActionResult<EventReservation> GetEventReservationById(long idReservation)
         {
             if(_eventReservationServices.GetReservationById(idReservation) == null)
@@ -43,6 +45,7 @@ namespace FinalProject.WebIII.Controllers
         [HttpGet("/eventReservation/GetByPersonNameAndEventTitle/{personName}/{title}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public ActionResult<EventReservation> GetReservationByPersonNameAndTitle(string personName, string title)
         {
             if (_eventReservationServices.GetReservationsByNameAndTitle(personName, title) == null)
@@ -57,6 +60,7 @@ namespace FinalProject.WebIII.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ServiceFilter(typeof(CheckIdEventForReservation))]
         [ServiceFilter(typeof(CheckExistingIdReservation))]
+        [Authorize]
         public ActionResult<EventReservation> PostEventReservation(EventReservation eventReservation)
         {
             if(!_eventReservationServices.CreateReservation(eventReservation))
@@ -70,6 +74,7 @@ namespace FinalProject.WebIII.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ServiceFilter(typeof(CheckIdEventForReservation))]
+        [Authorize(Roles = "admin")]
         public IActionResult PutEventReservation(long idReservation, EventReservation eventReservation)
         {
             if(!_eventReservationServices.UpdateReservation(idReservation, eventReservation))
@@ -82,6 +87,7 @@ namespace FinalProject.WebIII.Controllers
         [HttpDelete("/eventReservation/Delete/{idReservation}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteEventReservation(long idReservation)
         {
             if(!_eventReservationServices.DeleteReservation(idReservation))

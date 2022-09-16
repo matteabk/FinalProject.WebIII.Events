@@ -29,9 +29,17 @@ namespace FinalProject.WebIII.Data.Repository
             parameters.Add("personName", reservation.PersonName);
             parameters.Add("quantity", reservation.Quantity);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Execute(query, parameters) == 1;
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return false;
+            }
         }
 
         public bool DeleteReservation(long idReservation)
@@ -41,9 +49,17 @@ namespace FinalProject.WebIII.Data.Repository
             var parameters = new DynamicParameters();
             parameters.Add("idReservation", idReservation);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Execute(query, parameters) == 1;
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return false;
+            }
         }
 
         public EventReservation GetReservationById(long idReservation)
@@ -52,10 +68,17 @@ namespace FinalProject.WebIII.Data.Repository
 
             var parameters = new DynamicParameters();
             parameters.Add("idReservation", idReservation);
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.QuerySingleOrDefault<EventReservation>(query, parameters);
+                return conn.QuerySingleOrDefault<EventReservation>(query, parameters);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return null;
+            }
         }
 
         public List<EventReservation> GetReservationsByEventID(long idEvent)
@@ -64,10 +87,17 @@ namespace FinalProject.WebIII.Data.Repository
 
             var parameters = new DynamicParameters();
             parameters.Add("idEvent", idEvent);
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Query<EventReservation>(query, parameters).ToList();
+                return conn.Query<EventReservation>(query, parameters).ToList();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return null;
+            }
         }
 
         public List<EventReservation> GetReservations()
@@ -87,9 +117,17 @@ namespace FinalProject.WebIII.Data.Repository
             parameters.Add("personName", personName);
             parameters.Add("title", title);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Query<EventReservation>(query, parameters).ToList();
+                return conn.Query<EventReservation>(query, parameters).ToList();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return null;
+            }
         }
 
         public bool UpdateReservation(long idReservation, EventReservation reservation)
@@ -102,9 +140,17 @@ namespace FinalProject.WebIII.Data.Repository
             parameters.Add("quantity", reservation.Quantity);
             parameters.Add("idReservation", idReservation);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Execute(query, parameters) == 1;
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return false;
+            }
         }
     }
 }

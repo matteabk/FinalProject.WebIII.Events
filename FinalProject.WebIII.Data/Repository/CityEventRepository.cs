@@ -33,10 +33,17 @@ namespace FinalProject.WebIII.Data.Repository
             parameters.Add("price", cityEvent.Price);
             parameters.Add("status", cityEvent.Status);
 
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return false;
+            }
         }
 
         public bool DeleteEvent(long idEvent)
@@ -45,10 +52,17 @@ namespace FinalProject.WebIII.Data.Repository
 
             var parameters = new DynamicParameters();
             parameters.Add("idEvent", idEvent);
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return false;
+            }
         }
 
         public CityEvent GetEventById(long idEvent)
@@ -58,9 +72,17 @@ namespace FinalProject.WebIII.Data.Repository
             var parameters = new DynamicParameters();
             parameters.Add("idEvent", idEvent);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.QuerySingleOrDefault<CityEvent>(query, parameters);
+                return conn.QuerySingleOrDefault<CityEvent>(query, parameters);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return null;
+            }
         }
 
         public List<CityEvent> GetEvents()
@@ -92,21 +114,37 @@ namespace FinalProject.WebIII.Data.Repository
             parameters.Add("local", local);
             parameters.Add("dateHourEvent", dateHourEvent);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Query<CityEvent>(query, parameters).ToList();
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return null;
+            }
         }
 
-        public List<CityEvent> GetEventsByDate (DateTime dateHourEvent)
+        public List<CityEvent> GetEventsByDate(DateTime dateHourEvent)
         {
             var query = "SELECT * FROM CityEvent WHERE CAST(dateHourEvent as DATE) = CAST(@dateHourEvent as DATE)";
 
             var parameters = new DynamicParameters();
             parameters.Add("dateHourEvent", dateHourEvent);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Query<CityEvent>(query, parameters).ToList();
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return null;
+            }
         }
 
         public List<CityEvent> GetEventsByPriceRangeAndDate(decimal price1, decimal price2, DateTime dateHourEvent)
@@ -118,9 +156,17 @@ namespace FinalProject.WebIII.Data.Repository
             parameters.Add("price2", price2);
             parameters.Add("dateHourEvent", dateHourEvent);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Query<CityEvent>(query,parameters).ToList();
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return null;
+            }
         }
 
         public bool UpdateEvent(long idEvent, CityEvent cityEvent)
@@ -137,9 +183,17 @@ namespace FinalProject.WebIII.Data.Repository
             parameters.Add("status", cityEvent.Status);
             parameters.Add("idEvent", idEvent);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Execute(query, parameters) == 1;
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Tivemos um erro ao se comunicar com o banco de dados, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                return false;
+            }
         }
 
         public void UpdateStatus(long idEvent, CityEvent cityEvent)
