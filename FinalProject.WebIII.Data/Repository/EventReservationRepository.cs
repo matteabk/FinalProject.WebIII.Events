@@ -130,14 +130,12 @@ namespace FinalProject.WebIII.Data.Repository
             }
         }
 
-        public bool UpdateReservation(long idReservation, EventReservation reservation)
+        public bool UpdateReservation(long idReservation, int quantity) //ALTERAR PARA APENAS QUANTITY
         {
-            var query = "UPDATE EventReservation SET idEvent = @idEvent, personNmae = @personName, quantity = @quantity WHERE idReservation = @idReservation";
+            var query = "UPDATE EventReservation SET quantity = @quantity WHERE idReservation = @idReservation";
 
             var parameters = new DynamicParameters();
-            parameters.Add("idEvent", reservation.IdEvent);
-            parameters.Add("personName", reservation.PersonName);
-            parameters.Add("quantity", reservation.Quantity);
+            parameters.Add("quantity", quantity);
             parameters.Add("idReservation", idReservation);
 
             try

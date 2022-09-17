@@ -73,11 +73,10 @@ namespace FinalProject.WebIII.Controllers
         [HttpPut("/eventReservation/Update/{idReservation}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ServiceFilter(typeof(CheckIdEventForReservation))]
         [Authorize(Roles = "admin")]
-        public IActionResult PutEventReservation(long idReservation, EventReservation eventReservation)
+        public IActionResult PutEventReservation(long idReservation, int quantity)
         {
-            if(!_eventReservationServices.UpdateReservation(idReservation, eventReservation))
+            if(!_eventReservationServices.UpdateReservation(idReservation, quantity))
             {
                 return NotFound();
             }
